@@ -1,29 +1,43 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-
-    <div v-if="!$auth.loading">
-      <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
-      <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
+    <div class="nav">
+      <div v-if="!$auth.loading">
+        <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
+        <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
+      </div>
     </div>
+
+    <VueTradingView
+      class="tv"
+      :options="{
+        autosize: 'true',
+        symbol: 'BINANCE:BTCUSDT',
+        interval: '240',
+        timezone: 'Europe/Paris',
+        theme: 'dark',
+        style: '1',
+        locale: 'fr',
+        withdateranges: 'true',
+        hide_side_toolbar: 'false',
+        allow_symbol_change: 'true',
+        watchlist: ['BINANCE:AVAXUSDT'],
+      }"
+    />
   </div>
 </template>
 
 <script>
-import HelloWorld from "@/components/HelloWorld.vue";
+import VueTradingView from "vue-trading-view";
 
 export default {
   name: "home",
   components: {
-    HelloWorld,
+    VueTradingView,
   },
   methods: {
-    // Log the user in
     login() {
       this.$auth.loginWithRedirect();
     },
-    // Log the user out
     logout() {
       this.$auth.logout({
         returnTo: window.location.origin,
@@ -32,3 +46,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.home {
+  height: 100%;
+}
+.tv {
+  height: 93%;
+}
+.nav {
+  height: 7%;
+}
+</style>

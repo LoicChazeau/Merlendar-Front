@@ -1,5 +1,5 @@
 <template>
-  <div class="height-100">
+  <div class="height-100 bg-dark">
     <div class="nav">
       <div class="width-100">
         <img class="logo" src="../assets/logomerlendar.png" />

@@ -5,6 +5,7 @@ import store from "./store";
 import { domain, clientId } from "../auth_config.json";
 import { Auth0Plugin } from "./auth";
 import "./assets/styles.css";
+import vuetify from "./plugins/vuetify";
 
 Vue.use(Auth0Plugin, {
   domain,
@@ -23,5 +24,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  vuetify,
   render: (h) => h(App),
 }).$mount("#app");

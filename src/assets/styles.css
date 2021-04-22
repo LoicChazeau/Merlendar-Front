@@ -10,3 +10,6 @@
 .noHover{
   pointer-events: none;
 }
+.bg-dark {
+  background-color: #2a2e39;
+}

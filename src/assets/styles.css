@@ -13,3 +13,11 @@
 .bg-dark {
   background-color: #2a2e39;
 }
+.my {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.mx {
+  margin-right: auto;
+  margin-left: auto;
+}

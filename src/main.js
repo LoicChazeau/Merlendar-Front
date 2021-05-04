@@ -32,7 +32,7 @@ firebase.initializeApp({
   storageBucket: "merlendar.appspot.com",
   messagingSenderId: "735927001298",
   appId: "1:735927001298:web:118e4d4511e321084a0d0b",
-  measurementId: "G-RZ16GTFB3K"
+  measurementId: "G-RZ16GTFB3K",
 });
 
 export const db = firebase.firestore();

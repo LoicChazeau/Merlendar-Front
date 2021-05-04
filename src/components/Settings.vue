@@ -31,3 +31,9 @@ export default {
   name: "Tache",
 };
 </script>
+
+<style scoped>
+svg:hover {
+  opacity: 0.7;
+}
+</style>

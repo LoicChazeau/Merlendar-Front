@@ -23,3 +23,9 @@ export default {
   name: "Notification",
 };
 </script>
+
+<style scoped>
+svg:hover {
+  opacity: 0.7;
+}
+</style>

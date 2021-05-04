@@ -19,3 +19,9 @@ export default {
   name: "Rappel",
 };
 </script>
+
+<style scoped>
+svg:hover {
+  opacity: 0.7;
+}
+</style>

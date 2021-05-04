@@ -115,7 +115,7 @@ rect {
   height: 100%;
 }
 .logo:hover {
-  opacity: 0.9;
+  opacity: 0.7;
   cursor: pointer;
 }
 .btnToday {
@@ -159,6 +159,9 @@ path {
   margin-left: 25%;
   outline: none;
   border: none;
+}
+.type:hover {
+  opacity: 0.9;
 }
 .arrow {
   background-image: linear-gradient(45deg, transparent 50%, white 50%),

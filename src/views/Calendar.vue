@@ -34,7 +34,7 @@
       </svg>
       <p class="date my">Avril 2021</p>
 
-      <select v-model="type" class="type my">
+      <select v-model="type" class="type my arrow">
         <option value="day">Jour</option>
         <option value="week">Semaine</option>
         <option value="month">Mois</option>
@@ -134,25 +134,39 @@ path {
   fill: white;
 }
 .left {
-  margin-left: 4%;
+  margin-left: 5%;
+  width: 2%;
 }
 .right {
-  margin-left: 1.5%;
+  margin-left: 1%;
+  width: 2%;
 }
 .date {
   color: white;
   font-size: 20px;
-  margin-left: 1.2%;
+  margin-left: 0.5%;
+  width: 10%;
 }
 .type {
   background-color: #a173d2;
   color: white;
-  padding: 0.45% 18px;
+  padding-top: 0.45%;
+  padding-bottom: 0.45%;
+  padding-right: 35px;
+  padding-left: 1%;
   font-size: 14px;
   border-radius: 5px;
-  margin-left: 35%;
+  margin-left: 25%;
   outline: none;
   border: none;
+}
+.arrow {
+  background-image: linear-gradient(45deg, transparent 50%, white 50%),
+    linear-gradient(135deg, white 50%, transparent 50%);
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+  background-size: 5px 5px, 5px 5px, 1px 1.5em;
+  background-repeat: no-repeat;
 }
 .navLogo {
   margin-left: 5%;

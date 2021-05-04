@@ -175,9 +175,10 @@ path {
   color: white;
   padding-top: 0.45%;
   padding-bottom: 0.45%;
-  padding-right: 35px;
+  padding-right: 1%;
   padding-left: 1%;
   font-size: 14px;
+  text-align-last:center;
   border-radius: 5px;
   margin-left: 25%;
   outline: none;
@@ -187,14 +188,14 @@ path {
   opacity: 0.9;
   cursor: pointer;
 }
-.arrow {
+/* .arrow {
   background-image: linear-gradient(45deg, transparent 50%, white 50%),
     linear-gradient(135deg, white 50%, transparent 50%);
   background-position: calc(100% - 20px) calc(1em + 2px),
     calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
   background-size: 5px 5px, 5px 5px, 1px 1.5em;
   background-repeat: no-repeat;
-}
+} */
 .navLogo {
   margin-left: 5%;
   margin-right: 5%;

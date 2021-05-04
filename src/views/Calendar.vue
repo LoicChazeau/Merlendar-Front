@@ -34,7 +34,7 @@
           d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"
         />
       </svg>
-      <p class="date my">{{ $refs.calendar.title }}</p>
+      <!-- <p class="date my">{{ $refs.calendar.title }}</p> -->
 
       <select v-model="type" class="type my arrow">
         <option value="day">Jour</option>

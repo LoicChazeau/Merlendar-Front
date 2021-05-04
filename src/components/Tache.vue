@@ -60,5 +60,6 @@ export default {
 <style scoped>
 svg:hover {
   opacity: 0.7;
+  cursor: pointer;
 }
 </style>

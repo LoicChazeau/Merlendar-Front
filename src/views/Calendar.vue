@@ -33,6 +33,20 @@
         />
       </svg>
       <p class="date my">Avril 2021</p>
+
+      <select v-model="type" class="type my">
+        <option value="day">Jour</option>
+        <option value="week">Semaine</option>
+        <option value="month">Mois</option>
+      </select>
+
+      <div class="navLogo my">
+        <Tache />
+        <Note />
+        <Rappel />
+        <Notification />
+        <Settings />
+      </div>
     </div>
 
     <v-sheet height="94%">
@@ -52,8 +66,27 @@
 </template>
 
 <script>
+import Tache from "../components/Tache.vue";
+import Note from "../components/Note.vue";
+import Rappel from "../components/Rappel.vue";
+import Notification from "../components/Notification.vue";
+import Settings from "../components/Settings.vue";
+
 export default {
   name: "calendar",
+  components: {
+    Tache,
+    Note,
+    Rappel,
+    Notification,
+    Settings,
+  },
+  data: () => {
+    return {
+      type: "month",
+      types: ["month", "week", "day", "4day"],
+    };
+  },
   methods: {
     logo() {
       window.location = "http://localhost:8080/";
@@ -67,7 +100,7 @@ export default {
   background-color: #43444e;
   height: 6%;
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
 }
 .burger {
   position: relative;
@@ -110,5 +143,22 @@ path {
   color: white;
   font-size: 20px;
   margin-left: 1.2%;
+}
+.type {
+  background-color: #a173d2;
+  color: white;
+  padding: 0.45% 18px;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-left: 35%;
+  outline: none;
+  border: none;
+}
+.navLogo {
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

@@ -9,13 +9,14 @@
         </svg>
       </div>
       <img class="logo" @click="logo" src="../assets/logomerlendar.png" />
-      <button class="btnToday my">Aujourd'hui</button>
+      <button class="btnToday my" @click="setToday">Aujourd'hui</button>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="15"
         height="15"
         viewBox="0 0 24 24"
         class="my left"
+        @click="prev"
       >
         <path
           d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
@@ -27,12 +28,13 @@
         height="15"
         viewBox="0 0 24 24"
         class="my right"
+        @click="next"
       >
         <path
           d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"
         />
       </svg>
-      <p class="date my">Avril 2021</p>
+      <p class="date my">{{ $refs.calendar.title }}</p>
 
       <select v-model="type" class="type my arrow">
         <option value="day">Jour</option>
@@ -91,6 +93,15 @@ export default {
     logo() {
       window.location = "http://localhost:8080/";
     },
+    setToday() {
+      this.focus = this.today;
+    },
+    prev() {
+      this.$refs.calendar.prev();
+    },
+    next() {
+      this.$refs.calendar.next();
+    },
   },
 };
 </script>
@@ -98,7 +109,7 @@ export default {
 <style scoped>
 .nav {
   background-color: #43444e;
-  height: 6%;
+  height: 60px;
   display: flex;
   /* flex-direction: row; */
 }
@@ -107,6 +118,10 @@ export default {
   top: 25%;
   margin-left: 1.2%;
   margin-right: 1%;
+}
+.burger:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 rect {
   fill: white;
@@ -129,6 +144,7 @@ rect {
 }
 .btnToday:hover {
   opacity: 0.9;
+  cursor: pointer;
 }
 path {
   fill: white;
@@ -137,15 +153,22 @@ path {
   margin-left: 5%;
   width: 2%;
 }
+.left:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
 .right {
   margin-left: 1%;
   width: 2%;
 }
+.right:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
 .date {
   color: white;
   font-size: 20px;
-  margin-left: 0.5%;
-  width: 10%;
+  width: 8%;
 }
 .type {
   background-color: #a173d2;
@@ -162,6 +185,7 @@ path {
 }
 .type:hover {
   opacity: 0.9;
+  cursor: pointer;
 }
 .arrow {
   background-image: linear-gradient(45deg, transparent 50%, white 50%),

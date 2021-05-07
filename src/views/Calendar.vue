@@ -82,15 +82,46 @@
           ></v-date-picker>
         </div>
         <div class="containerFlag width-100">
-          <img :src="this.flag[this.random].flag" class="imgFlag" />
-          <p class="textFlag invisible" id="response">
-            {{ this.flag[this.random].translations.fr }}
-          </p>
+          <img
+            :src="this.flag[this.random0].flag"
+            class="imgFlag"
+            v-if="this.correct === 0"
+          />
+          <img
+            :src="this.flag[this.random1].flag"
+            class="imgFlag"
+            v-else-if="this.correct === 1"
+          />
+          <img
+            :src="this.flag[this.random2].flag"
+            class="imgFlag"
+            v-else-if="this.correct === 2"
+          />
+          <div class="response">
+            <p class="textFlag">
+              • {{ this.flag[this.random0].translations.fr }}
+            </p>
+            <p class="textFlag">
+              • {{ this.flag[this.random1].translations.fr }}
+            </p>
+            <p class="textFlag">
+              • {{ this.flag[this.random2].translations.fr }}
+            </p>
+          </div>
         </div>
         <div class="rowx btnFlag width-100">
           <button class="responseBtn" @click="showResponse">Réponse</button>
           <button class="nextBtn" @click="nextFlag">Suivant</button>
         </div>
+        <p class="textFlagResponse invisible" id="response0">
+          ✔️ {{ this.flag[this.random0].translations.fr }}
+        </p>
+        <p class="textFlagResponse invisible" id="response1">
+          ✔️ {{ this.flag[this.random1].translations.fr }}
+        </p>
+        <p class="textFlagResponse invisible" id="response2">
+          ✔️ {{ this.flag[this.random2].translations.fr }}
+        </p>
       </div>
       <div class="redLiney"></div>
       <v-calendar
@@ -153,13 +184,20 @@ export default {
       dialog: false,
       dialogDate: false,
       flag: "",
-      random: "",
+      random0: "",
+      random1: "",
+      random2: "",
+      random3: "",
+      correct: "",
     };
   },
   mounted() {
     this.getEvents();
     this.getFlag();
-    this.random = Math.floor(Math.random() * 250);
+    this.correct = Math.floor(Math.random() * 3);
+    this.random0 = Math.floor(Math.random() * 250);
+    this.random1 = Math.floor(Math.random() * 250);
+    this.random2 = Math.floor(Math.random() * 250);
   },
   computed: {
     title() {
@@ -297,13 +335,16 @@ export default {
         .catch((error) => console.log("error", error));
     },
     showResponse() {
-      var response = document.getElementById("response");
+      var response = document.getElementById("response" + this.correct);
       response.style.display = "block";
     },
     nextFlag() {
-      var response = document.getElementById("response");
+      var response = document.getElementById("response" + this.correct);
       response.style.display = "none";
-      this.random = Math.floor(Math.random() * 250);
+      this.correct = Math.floor(Math.random() * 3);
+      this.random0 = Math.floor(Math.random() * 250);
+      this.random1 = Math.floor(Math.random() * 250);
+      this.random2 = Math.floor(Math.random() * 250);
     },
   },
 };
@@ -446,17 +487,27 @@ path {
 .imgFlag {
   height: auto;
   width: 70%;
+  margin-bottom: 5%;
 }
 .textFlag {
   color: white;
-  margin-top: 7%;
+  margin-top: 10%;
+}
+.textFlagResponse {
+  color: #6FB672;
+  margin-top: 10%;
+}
+.response {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .btnFlag {
   justify-content: space-evenly;
-  margin-top: 7%;
+  margin-top: 10%;
 }
 .responseBtn {
-  background-color: #a173d2;
+  background-color: #6FB672;
   color: white;
   padding: 10px 15px;
   font-size: 14px;
@@ -468,7 +519,7 @@ path {
   opacity: 0.9;
 }
 .nextBtn {
-  background-color: #a173d2;
+  background-color: #3e779f;
   color: white;
   padding: 10px 15px;
   font-size: 14px;

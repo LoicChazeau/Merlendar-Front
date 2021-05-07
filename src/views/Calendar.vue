@@ -40,7 +40,7 @@
           d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"
         />
       </svg>
-      <!-- <p class="date my">{{ $refs.calendar.title }}</p> -->
+      <p class="date my">{{ title }}</p>
 
       <select v-model="type" class="type my arrow">
         <option value="day">Jour</option>
@@ -94,19 +94,22 @@
       </div>
       <div class="redLiney"></div>
       <v-calendar
-        class="calendar"
         ref="calendar"
-        v-model="value"
-        :weekdays="weekday"
-        :type="type"
-        :events="events"
-        :event-overlap-mode="mode"
-        :event-overlap-threshold="30"
-        :event-color="getEventColor"
-        @change="getEvents"
-        dark
+        v-model="focus"
         color="#a173d2"
+        :weekdays="weekday"
+        :events="events"
+        :event-color="getEventColor"
+        :event-margin-bottom="3"
+        :now="today"
+        :type="type"
+        @click:event="showEvent"
+        @click:more="viewDay"
+        @click:date="setDialogDate"
+        @change="updateRange"
+        dark
         locale="fr"
+        class="calendar"
       ></v-calendar>
     </v-sheet>
   </div>
@@ -119,6 +122,8 @@ import Rappel from "../components/Rappel.vue";
 import Notification from "../components/Notification.vue";
 import Settings from "../components/Settings.vue";
 
+import { db } from "@/main";
+
 export default {
   name: "calendar",
   components: {
@@ -130,16 +135,56 @@ export default {
   },
   data: () => {
     return {
+      today: new Date().toISOString().substr(0, 10),
+      focus: new Date().toISOString().substr(0, 10),
       type: "month",
       types: ["month", "week", "day"],
       weekday: [1, 2, 3, 4, 5, 6, 0],
+      name: null,
+      details: null,
+      start: null,
+      end: null,
+      color: "#1976D2", // default event color
+      currentlyEditing: null,
+      selectedEvent: {},
+      selectedElement: null,
+      selectedOpen: false,
+      events: [],
+      dialog: false,
+      dialogDate: false,
       flag: "",
       random: "",
     };
   },
   mounted() {
+    this.getEvents();
     this.getFlag();
     this.random = Math.floor(Math.random() * 250);
+  },
+  computed: {
+    title() {
+      const { start, end } = this;
+      if (!start || !end) {
+        return "";
+      }
+      const startMonth = this.monthFormatter(start);
+      const startYear = start.year;
+      const startDay = start.day;
+      switch (this.type) {
+        case "month":
+          return `${startMonth} ${startYear}`;
+        case "week":
+        case "day":
+          return `${startDay} ${startMonth} ${startYear}`;
+      }
+      return "";
+    },
+    monthFormatter() {
+      return this.$refs.calendar.getFormatter({
+        timeZone: "UTC",
+        month: "long",
+      });
+    },
   },
   methods: {
     logo() {
@@ -153,6 +198,27 @@ export default {
         burger.style.display = "none";
       }
     },
+    async getEvents() {
+      let snapshot = await db.collection("calEvent").get();
+      const events = [];
+      snapshot.forEach((doc) => {
+        let appData = doc.data();
+        appData.id = doc.id;
+        events.push(appData);
+      });
+      this.events = events;
+    },
+    setDialogDate({ date }) {
+      this.dialogDate = true;
+      this.focus = date;
+    },
+    viewDay({ date }) {
+      this.focus = date;
+      this.type = "day";
+    },
+    getEventColor(event) {
+      return event.color;
+    },
     setToday() {
       this.focus = this.today;
     },
@@ -161,6 +227,56 @@ export default {
     },
     next() {
       this.$refs.calendar.next();
+    },
+    async addEvent() {
+      if (this.name && this.start && this.end) {
+        await db.collection("calEvent").add({
+          name: this.name,
+          details: this.details,
+          start: this.start,
+          end: this.end,
+          color: this.color,
+        });
+        this.getEvents();
+        (this.name = ""),
+          (this.details = ""),
+          (this.start = ""),
+          (this.end = ""),
+          (this.color = "");
+      } else {
+        alert("You must enter event name, start, and end time");
+      }
+    },
+    editEvent(ev) {
+      this.currentlyEditing = ev.id;
+    },
+    async updateEvent(ev) {
+      await db.collection("calEvent").doc(this.currentlyEditing).update({
+        details: ev.details,
+      });
+      (this.selectedOpen = false), (this.currentlyEditing = null);
+    },
+    async deleteEvent(ev) {
+      await db.collection("calEvent").doc(ev).delete();
+      (this.selectedOpen = false), this.getEvents();
+    },
+    showEvent({ nativeEvent, event }) {
+      const open = () => {
+        this.selectedEvent = event;
+        this.selectedElement = nativeEvent.target;
+        setTimeout(() => (this.selectedOpen = true), 10);
+      };
+      if (this.selectedOpen) {
+        this.selectedOpen = false;
+        setTimeout(open, 10);
+      } else {
+        open();
+      }
+      nativeEvent.stopPropagation();
+    },
+    updateRange({ start, end }) {
+      this.start = start;
+      this.end = end;
     },
     getFlag() {
       var myHeaders = new Headers();
@@ -261,7 +377,7 @@ path {
 .date {
   color: white;
   font-size: 20px;
-  width: 8%;
+  width: 15%;
 }
 .type {
   background-color: #a173d2;
@@ -318,10 +434,6 @@ path {
 .imgCreateBtn {
   height: 100%;
 }
-.theme--dark.v-card {
-  background-color: #43444e;
-  color: #ffffff;
-}
 .picker {
   margin-top: 15%;
 }
@@ -366,14 +478,5 @@ path {
 }
 .nextBtn:hover {
   opacity: 0.9;
-}
-.v-calendar-daily {
-  width: 80%;
-}
-.v-calendar-weekly__head-weekday {
-  padding-top: 10px !important;
-}
-.calendar {
-  border: none !important;
 }
 </style>

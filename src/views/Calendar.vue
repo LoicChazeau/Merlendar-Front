@@ -76,7 +76,7 @@
             readonly
             locale="fr"
             no-title
-            color="#e77c76"
+            color="#a173d2"
             dark
             first-day-of-week="1"
           ></v-date-picker>
@@ -94,6 +94,7 @@
       </div>
       <div class="redLiney"></div>
       <v-calendar
+        class="calendar"
         ref="calendar"
         v-model="value"
         :weekdays="weekday"
@@ -103,6 +104,9 @@
         :event-overlap-threshold="30"
         :event-color="getEventColor"
         @change="getEvents"
+        dark
+        color="#a173d2"
+        locale="fr"
       ></v-calendar>
     </v-sheet>
   </div>
@@ -127,14 +131,15 @@ export default {
   data: () => {
     return {
       type: "month",
-      types: ["month", "week", "day", "4day"],
+      types: ["month", "week", "day"],
+      weekday: [1, 2, 3, 4, 5, 6, 0],
       flag: "",
       random: "",
     };
   },
   mounted() {
     this.getFlag();
-    this.random = Math.floor(Math.random() * 50);
+    this.random = Math.floor(Math.random() * 250);
   },
   methods: {
     logo() {
@@ -285,11 +290,11 @@ path {
 }
 .redLinex {
   background-color: #e77c76;
-  height: 0.1%;
+  height: 1px;
 }
 .redLiney {
   background-color: #e77c76;
-  width: 0.1%;
+  width: 1px;
 }
 .create {
   background-color: #3e779f;
@@ -361,5 +366,14 @@ path {
 }
 .nextBtn:hover {
   opacity: 0.9;
+}
+.v-calendar-daily {
+  width: 80%;
+}
+.v-calendar-weekly__head-weekday {
+  padding-top: 10px !important;
+}
+.calendar {
+  border: none !important;
 }
 </style>

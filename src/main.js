@@ -5,6 +5,7 @@ import store from "./store";
 import { domain, clientId } from "../auth_config.json";
 import { Auth0Plugin } from "./auth";
 import "./assets/styles.css";
+import "./assets/calendar.css";
 import vuetify from "./plugins/vuetify";
 import firebase from "firebase";
 import VueTextareaAutosize from "vue-textarea-autosize";

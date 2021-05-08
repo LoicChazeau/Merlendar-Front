@@ -61,7 +61,7 @@
 
     <v-sheet height="94%" class="rowx">
       <div class="burger width-20" id="burger">
-        <div class="create">
+        <div class="create mx" @click.stop="dialog = true">
           <div class="rowx createBtn">
             <img
               src="../assets/plus.png"
@@ -123,7 +123,82 @@
           ✔️ {{ this.flag[this.random2].translations.fr }}
         </p>
       </div>
-      <div class="redLiney"></div>
+      
+
+      <v-dialog v-model="dialog" max-width="500">
+        <v-card>
+          <v-container>
+            <v-form @submit.prevent="addEvent">
+              <v-text-field
+                v-model="name"
+                type="text"
+                label="Nom de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="details"
+                type="text"
+                label="Description de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="start"
+                type="date"
+                label="Date de début de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="end"
+                type="date"
+                label="Date de fin de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="color"
+                type="color"
+                label="Couleur de l'événement"
+              ></v-text-field>
+              <button class="saveEvent" @click.stop="dialog = false">
+                Sauvegarder l'événement
+              </button>
+            </v-form>
+          </v-container>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialogDate" max-width="500">
+        <v-card>
+          <v-container>
+            <v-form @submit.prevent="addEvent">
+              <v-text-field
+                v-model="name"
+                type="text"
+                label="Nom de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="details"
+                type="text"
+                label="Description de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="start"
+                type="date"
+                label="Date de début de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="end"
+                type="date"
+                label="Date de fin de l'événement"
+              ></v-text-field>
+              <v-text-field
+                v-model="color"
+                type="color"
+                label="Couleur de l'événement"
+              ></v-text-field>
+              <button class="saveEvent" @click.stop="dialog = false">
+                Sauvegarder l'événement
+              </button>
+            </v-form>
+          </v-container>
+        </v-card>
+      </v-dialog>
+
       <v-calendar
         ref="calendar"
         v-model="focus"
@@ -142,6 +217,64 @@
         locale="fr"
         class="calendar"
       ></v-calendar>
+      <v-app>
+        <v-menu
+          v-model="selectedOpen"
+          :close-on-content-click="false"
+          :activator="selectedElement"
+          offset-x
+        >
+          <v-card color="grey lighten-4" :width="350" flat>
+            <v-toolbar :color="selectedEvent.color" dark>
+              <v-btn @click="deleteEvent(selectedEvent.id)" icon>
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+              <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+              <div class="flex-grow-1"></div>
+            </v-toolbar>
+
+            <v-card-text>
+              <form
+                style="display: flex"
+                v-if="currentlyEditing !== selectedEvent.id"
+              >
+                {{ selectedEvent.details }}
+              </form>
+              <form v-else>
+                <textarea-autosize
+                  v-model="selectedEvent.details"
+                  type="text"
+                  style="width: 100%"
+                  placeholder="add note"
+                >
+                </textarea-autosize>
+              </form>
+            </v-card-text>
+
+            <v-card-actions class="eventBtn">
+              <button class="close" @click="selectedOpen = false">
+                Fermer
+              </button>
+              <button
+                class="edit"
+                v-if="currentlyEditing !== selectedEvent.id"
+                @click.prevent="editEvent(selectedEvent)"
+              >
+                Modifier
+              </button>
+              <button
+                class="save"
+                v-else
+                type="submit"
+                @click.prevent="updateEvent(selectedEvent)"
+              >
+                Sauvegarder
+              </button>
+            </v-card-actions>
+          </v-card>
+        </v-menu>
+      </v-app>
+      <div class="redLiney"></div>
     </v-sheet>
   </div>
 </template>
@@ -282,7 +415,9 @@ export default {
           (this.end = ""),
           (this.color = "");
       } else {
-        alert("You must enter event name, start, and end time");
+        alert(
+          "Vous devez entrer le nom de l'événement, l'heure de début et de fin."
+        );
       }
     },
     editEvent(ev) {
@@ -302,14 +437,18 @@ export default {
       const open = () => {
         this.selectedEvent = event;
         this.selectedElement = nativeEvent.target;
-        setTimeout(() => (this.selectedOpen = true), 10);
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => (this.selectedOpen = true))
+        );
       };
+
       if (this.selectedOpen) {
         this.selectedOpen = false;
-        setTimeout(open, 10);
+        requestAnimationFrame(() => requestAnimationFrame(() => open()));
       } else {
         open();
       }
+
       nativeEvent.stopPropagation();
     },
     updateRange({ start, end }) {
@@ -450,8 +589,8 @@ path {
   height: 1px;
 }
 .redLiney {
-  background-color: #e77c76;
-  width: 1px;
+  border-left: #e77c76 1px solid !important;
+  z-index: 1;
 }
 .create {
   background-color: #3e779f;
@@ -494,7 +633,7 @@ path {
   margin-top: 10%;
 }
 .textFlagResponse {
-  color: #6FB672;
+  color: #6fb672;
   margin-top: 10%;
 }
 .response {
@@ -507,7 +646,7 @@ path {
   margin-top: 10%;
 }
 .responseBtn {
-  background-color: #6FB672;
+  background-color: #6fb672;
   color: white;
   padding: 10px 15px;
   font-size: 14px;
@@ -529,5 +668,48 @@ path {
 }
 .nextBtn:hover {
   opacity: 0.9;
+}
+.close {
+  color: white;
+  background-color: #e77c76;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  outline: none;
+}
+.close:hover {
+  opacity: 0.9;
+}
+.edit {
+  color: white;
+  background-color: #3e779f;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  outline: none;
+  margin-left: 5%;
+}
+.edit:hover {
+  opacity: 0.9;
+}
+.save {
+  color: white;
+  background-color: #6fb672;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 5px;
+  outline: none;
+  margin-left: 5%;
+}
+.save:hover {
+  opacity: 0.9;
+}
+.saveEvent {
+  color: white;
+  background-color: #6fb672;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
 }
 </style>

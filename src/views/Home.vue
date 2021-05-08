@@ -10,7 +10,8 @@
           onclick="window.location.href='/calendar'"
           class="calendar height-100 width-100"
         >
-          Calendar
+          Merlendar
+          <p class="guillaume" v-if="$auth.isAuthenticated">Feat Guillaume</p>
         </button>
       </div>
       <div v-if="!$auth.loading" class="width-10">
@@ -108,5 +109,9 @@ export default {
 }
 .calendar:hover {
   opacity: 0.9;
+}
+.guillaume {
+  font-size: 10px;
+  padding-top: 5px;
 }
 </style>

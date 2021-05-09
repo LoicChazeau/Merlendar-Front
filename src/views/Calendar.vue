@@ -328,9 +328,9 @@ export default {
     this.getEvents();
     this.getFlag();
     this.correct = Math.floor(Math.random() * 3);
-    this.random0 = Math.floor(Math.random() * 250);
-    this.random1 = Math.floor(Math.random() * 250);
-    this.random2 = Math.floor(Math.random() * 250);
+    this.random0 = Math.floor(Math.random() * 249);
+    this.random1 = Math.floor(Math.random() * 249);
+    this.random2 = Math.floor(Math.random() * 249);
   },
   computed: {
     title() {
@@ -481,9 +481,9 @@ export default {
       var response = document.getElementById("response" + this.correct);
       response.style.display = "none";
       this.correct = Math.floor(Math.random() * 3);
-      this.random0 = Math.floor(Math.random() * 250);
-      this.random1 = Math.floor(Math.random() * 250);
-      this.random2 = Math.floor(Math.random() * 250);
+      this.random0 = Math.floor(Math.random() * 249);
+      this.random1 = Math.floor(Math.random() * 249);
+      this.random2 = Math.floor(Math.random() * 249);
     },
   },
 };

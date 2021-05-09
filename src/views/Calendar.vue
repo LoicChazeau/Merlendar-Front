@@ -540,7 +540,7 @@ path {
 }
 .left {
   margin-left: 5%;
-  width: 2%;
+  width: 3%;
 }
 .left:hover {
   opacity: 0.8;
@@ -548,7 +548,7 @@ path {
 }
 .right {
   margin-left: 1%;
-  width: 2%;
+  width: 3%;
 }
 .right:hover {
   opacity: 0.8;
@@ -557,7 +557,7 @@ path {
 .date {
   color: white;
   font-size: 20px;
-  width: 15%;
+  width: 25%;
 }
 .type {
   background-color: #a173d2;
@@ -569,7 +569,7 @@ path {
   font-size: 14px;
   text-align-last: center;
   border-radius: 5px;
-  margin-left: 25%;
+  margin-left: 320px;
   outline: none;
   border: none;
 }
@@ -580,7 +580,7 @@ path {
 .navLogo {
   margin-left: 5%;
   margin-right: 5%;
-  width: 20%;
+  width: 40%;
   display: flex;
   justify-content: space-between;
 }
@@ -596,7 +596,7 @@ path {
   background-color: #3e779f;
   border-radius: 18px;
   width: 110px;
-  margin-top: 40px;
+  margin-top: 20px;
   box-shadow: 0px 6px 8px 0px rgba(0, 0, 0, 0.4);
   padding: 10px;
 }
@@ -615,26 +615,26 @@ path {
   height: 100%;
 }
 .picker {
-  margin-top: 15%;
+  margin-top: 20px;
 }
 .containerFlag {
-  margin-top: 15%;
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 .imgFlag {
   height: auto;
-  width: 70%;
-  margin-bottom: 5%;
+  width: 60%;
+  margin-bottom: 10px;
 }
 .textFlag {
   color: white;
-  margin-top: 10%;
+  margin-top: 10px;
 }
 .textFlagResponse {
   color: #6fb672;
-  margin-top: 10%;
+  margin-top: 20px;
 }
 .response {
   display: flex;
@@ -643,7 +643,7 @@ path {
 }
 .btnFlag {
   justify-content: space-evenly;
-  margin-top: 10%;
+  margin-top: 20px;
 }
 .responseBtn {
   background-color: #6fb672;

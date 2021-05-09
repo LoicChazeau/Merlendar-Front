@@ -1,24 +1,44 @@
-# merlendar
+Calendar for Digitalendar project
+============================
 
-## Project setup
+Digitalendar is a project of creation of a calendar for the students of epitech digital regrouping full of functionality as: the creation of events, a quiz on the flags...
+
+----------
+
+
+Start the project
+----------------------------
+Go to : https://merlendar.herokuapp.com/calendar
+
+Or clone the project :
 ```
-npm install
+$>git clone git@github.com:LoicChazeau/Merlendar-Front.git
+
+$>cd Merlendar-Front
+
+$>npm install
+
+$>npm start
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+---
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Built With
 
-### Lints and fixes files
-```
-npm run lint
-```
+* VueJs - The web framework used
+* Vuetify - The material design framework for Vue.js
+* HTML - The background  of the front end
+* CSS - The shape of the front end
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Version
+
+ - Vue/Cli: 4.5.12
+ - JS: ES11
+ - npm: 7.8.0
+
+Author
+------
+
+**Loïc Chazeau**
+

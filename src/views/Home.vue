@@ -1,9 +1,34 @@
 <template>
-  <div class="home">
+  <div class="height-100 bg-dark">
     <div class="nav">
-      <div v-if="!$auth.loading">
-        <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>
-        <button v-if="$auth.isAuthenticated" @click="logout">Log out</button>
+      <div class="width-100">
+        <img class="logo" src="../assets/logomerlendar.png" />
+      </div>
+      <div class="width-10">
+        <button
+          v-if="$auth.isAuthenticated"
+          onclick="window.location.href='/calendar'"
+          class="calendar height-100 width-100"
+        >
+          Merlendar
+          <p class="guillaume" v-if="$auth.isAuthenticated">Feat Guillaume</p>
+        </button>
+      </div>
+      <div v-if="!$auth.loading" class="width-10">
+        <button
+          v-if="!$auth.isAuthenticated"
+          @click="login"
+          class="login height-100 width-100"
+        >
+          Log In
+        </button>
+        <button
+          v-if="$auth.isAuthenticated"
+          @click="logout"
+          class="login height-100 width-100"
+        >
+          Log Out
+        </button>
       </div>
     </div>
 
@@ -48,13 +73,45 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  height: 100%;
-}
 .tv {
   height: 93%;
 }
 .nav {
   height: 7%;
+  background-color: #2a2e39;
+  display: flex;
+  flex-direction: row;
+}
+.logo {
+  height: 100%;
+  margin-left: 10%;
+}
+.login {
+  background-color: #a173d2;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 1.3vw;
+  cursor: pointer;
+  outline: none;
+}
+.login:hover {
+  opacity: 0.9;
+}
+.calendar {
+  background-color: #e77c76;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 1.3vw;
+  cursor: pointer;
+  outline: none;
+}
+.calendar:hover {
+  opacity: 0.9;
+}
+.guillaume {
+  font-size: 10px;
+  padding-top: 5px;
 }
 </style>

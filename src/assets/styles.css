@@ -1,0 +1,32 @@
+.width-10 {
+  width: 10%;
+}
+.width-20 {
+  width: 20%;
+}
+.width-100 {
+  width: 100%;
+}
+.height-100 {
+  height: 100%;
+}
+.noHover{
+  pointer-events: none;
+}
+.bg-dark {
+  background-color: #2a2e39;
+}
+.my {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.mx {
+  margin-right: auto;
+  margin-left: auto;
+}
+.rowx {
+  display: flex;
+}
+.invisible {
+  display: none;
+}

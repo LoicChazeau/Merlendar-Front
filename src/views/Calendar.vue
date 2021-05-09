@@ -1,5 +1,6 @@
 <template>
-  <div class="height-100">
+  <div class="height-100 bg-dark">
+    <!-- <div v-if="$auth.isAuthenticated" class="height-100"> -->
     <div class="nav">
       <div class="burgerBtn1">
         <svg
@@ -276,6 +277,11 @@
       </v-app>
       <div class="redLiney"></div>
     </v-sheet>
+    <!-- </div>
+    <div class="containerLogin">
+      <p class="textLogin">Vous devez vous connecter !!</p>
+      <button class="homeBtn" @click="home">Retour au menu</button>
+    </div> -->
   </div>
 </template>
 
@@ -359,6 +365,9 @@ export default {
   },
   methods: {
     logo() {
+      window.location = "http://localhost:8080/";
+    },
+    home() {
       window.location = "http://localhost:8080/";
     },
     burger() {
@@ -711,5 +720,21 @@ path {
   font-size: 16px;
   border-radius: 5px;
   outline: none;
+}
+.containerLogin{
+  padding-top: 300px;
+}
+.textLogin {
+  color: white;
+  font-size: 16px;
+}
+.homeBtn {
+  color: white;
+  background-color: #3e779f;
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 5px;
+  outline: none;
+  margin-top: 40px;
 }
 </style>
